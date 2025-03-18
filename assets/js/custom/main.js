@@ -133,32 +133,23 @@ function logear() {
     
     return false;
 }
-/*
-function administrar(pagina){
-    document.getElementById("principal").innerHTML="";
-	var accion = "cargar";
-    //alert("si esta en esta funcion");
-    $("#principal").load("controlador/ctrl"+pagina+".php",{accion:accion});    
-	
-}*/
 
-function administrar(pagina){
-    $("#principal").html("");
-    var accion = 'cargar';
+function administrar(pagina) {
+    document.getElementById("principal").innerHTML = "";
+    const accion = 'cargar';
 
-    $.ajax({
-        type: "POST",
-        url: "controlador/ctrl"+pagina+".php",
-        data: {accion:accion},
-        success:function(respuesta){
-            $("#principal").html(respuesta);
-            $(".dataTable").dataTable();
-        },
-        error: function(respuesta){
-            console.log(respuesta);
-        }
-    });
-}//ok
+    axios.post("../controlador/ctrl" + pagina + ".php", new URLSearchParams({ accion: accion }))
+        .then(response => {
+            document.getElementById("principal").innerHTML = response.data;
+            if (typeof $('.dataTable').DataTable === 'function') {
+                $('.dataTable').DataTable();
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
 
 function cerrar(){
 	var ventanac = document.getElementById("vent");
