@@ -110,48 +110,25 @@
         </li>
 
         <li class="pc-item pc-caption">
-          <label>Other</label>
+          <label>Reportes</label>
           <i class="ti ti-brand-chrome"></i>
         </li>
-        <li class="pc-item pc-hasmenu">
-          <a href="#!" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span class="pc-mtext">Menu
-              levels</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
-          <ul class="pc-submenu">
-            <li class="pc-item"><a class="pc-link" href="#!">Level 2.1</a></li>
-            <li class="pc-item pc-hasmenu">
-              <a href="#!" class="pc-link">Level 2.2<span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
-              <ul class="pc-submenu">
-                <li class="pc-item"><a class="pc-link" href="#!">Level 3.1</a></li>
-                <li class="pc-item"><a class="pc-link" href="#!">Level 3.2</a></li>
-                <li class="pc-item pc-hasmenu">
-                  <a href="#!" class="pc-link">Level 3.3<span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
-                  <ul class="pc-submenu">
-                    <li class="pc-item"><a class="pc-link" href="#!">Level 4.1</a></li>
-                    <li class="pc-item"><a class="pc-link" href="#!">Level 4.2</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="pc-item pc-hasmenu">
-              <a href="#!" class="pc-link">Level 2.3<span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
-              <ul class="pc-submenu">
-                <li class="pc-item"><a class="pc-link" href="#!">Level 3.1</a></li>
-                <li class="pc-item"><a class="pc-link" href="#!">Level 3.2</a></li>
-                <li class="pc-item pc-hasmenu">
-                  <a href="#!" class="pc-link">Level 3.3<span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
-                  <ul class="pc-submenu">
-                    <li class="pc-item"><a class="pc-link" href="#!">Level 4.1</a></li>
-                    <li class="pc-item"><a class="pc-link" href="#!">Level 4.2</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
+        <li class="pc-item">
+          <a href="#" onclick='contarVotos(1)' id='conteo' class="pc-link">
+            <span class="pc-micon"><i class="ti ti-box-multiple-7"></i></span>
+            <span class="pc-mtext">Conteo de Votos</span>
+          </a>
         </li>
         <li class="pc-item">
-          <a href="../other/sample-page.html" class="pc-link">
-            <span class="pc-micon"><i class="ti ti-brand-chrome"></i></span>
-            <span class="pc-mtext">Sample page</span>
+          <a href="#" onclick='contarVotos(2)' id='Abstencionismo' class="pc-link">
+            <span class="pc-micon"><i class="ti ti-file-dislike"></i></span>
+            <span class="pc-mtext">Abstencionismo</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="#" onclick='contarVotos(1)' id='conteo' class="pc-link">
+            <span class="pc-micon"><i class="ti ti-ad-2"></i></span>
+            <span class="pc-mtext">Tarjetón pdf</span>
           </a>
         </li>
       </ul>
@@ -392,7 +369,7 @@
 
   <!-- [ Main Content ] start -->
   <div class="pc-container">
-    <div class="pc-content">
+    <div class="pc-content" id="principal">
       <!-- [ breadcrumb ] start -->
       <div class="page-header">
         <div class="page-block">
@@ -412,7 +389,7 @@
       </div>
       <!-- [ breadcrumb ] end -->
       <!-- [ Main Content ] start -->
-      <div class="row" id="principal">
+      <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-6 col-xl-3">
           <div class="card">
@@ -697,7 +674,7 @@
       </div>
     </div>
   </div>
-  <!-- [ Main Content ] end -->
+  <!-- [ Main Content ] end 
   <footer class="pc-footer">
     <div class="footer-wrapper container-fluid">
       <div class="row">
@@ -714,7 +691,7 @@
       </div>
     </div>
   </footer>
-
+-->
   <!-- [Page Specific JS] start -->
   <script src="../assets/js/plugins/apexcharts.min.js"></script>
   <script src="../assets/js/pages/dashboard-default.js"></script>
