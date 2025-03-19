@@ -28,7 +28,7 @@
                                 <?php 
                                     if($candidato['id'] != 0){ 
                                 ?>    
-                                    <img src='image/<?php echo $candidato['photo'] ?>' width='40' height='40' />  
+                                    <img src='candidatos/image/<?php echo $candidato['photo'] ?>' width='40' height='40' />  
                                 <?php 
                                     } 
                                 ?>              
@@ -91,7 +91,7 @@
                                 <?php 
                                     if($candidato['id'] != 0){ 
                                 ?>    
-                                    <img src='image/<?php echo $candidato['photo'] ?>' width='40' height='40' />  
+                                    <img src='candidatos/image/<?php echo $candidato['photo'] ?>' width='40' height='40' />  
                                 <?php 
                                     } 
                                 ?>              

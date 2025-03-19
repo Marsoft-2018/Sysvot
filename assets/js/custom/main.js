@@ -141,9 +141,9 @@ function administrar(pagina) {
     axios.post("../controlador/ctrl" + pagina + ".php", new URLSearchParams({ accion: accion }))
         .then(response => {
             document.getElementById("principal").innerHTML = response.data;
-            if (typeof $('.dataTable').DataTable === 'function') {
-                $('.dataTable').DataTable();
-            }
+            // if (typeof $('.dataTable').DataTable === 'function') {
+            //     $('.dataTable').DataTable();
+            // }
         })
         .catch(error => {
             console.error(error);
@@ -209,9 +209,10 @@ function cambiarFoto2(id){
 }//No funciona problema con elevento onsubmit del formulario
 
 
-function contarVotos(op){
-    console.log("Opcion: "+op);
-    $("#principal").html("");
+function contarVotos(op) {
+    console.log("Opcion: " + op);
+    document.getElementById("principal").innerHTML = "";
+
     var accion = "contar";
     if (op == 2) {
         accion = "Abstencion";
@@ -220,18 +221,14 @@ function contarVotos(op){
     if (op == 3) {
         accion = "Participacion";
     }
-    
-    $.ajax({
-        type:"POST",
-        url:"controlador/ctrlVotos.php",
-        data:{accion:accion},
-        success:function(data){
-            $("#principal").html(data);   
-        },
-        error: function(err){
-            console.log('test: '+err);
-        }
-    });   
+
+    axios.post('../controlador/ctrlVotos.php', {accion: accion})
+    .then(function(response) {
+        document.getElementById("principal").innerHTML = response.data;
+    })
+    .catch(function(error) {
+        console.log('Error: ' + error);
+    });
 }
 
 function tarjetonPdf(op){
@@ -307,22 +304,22 @@ function alerta(){
     })
 }
 
-function controlVotacion(estado){
+function controlVotacion(estado) {
     var accion = "controlVotacion";
     
-    $.ajax({
-        type:"POST",
-        url:"controlador/ctrlVotos.php",
-        data:{accion:accion,estado:estado},
-        success:function(data){
-            swal({title:"¡Hecho!",
-                text:''+data,
-                timer: 3500,     
-                type:'success'}
-            );   
-        },
-        error: function(err){
-            console.log('test: '+err);
-        }
+    axios.post('../controlador/ctrlVotos.php', {
+        accion: accion,
+        estado: estado
+    })
+    .then(function(response) {
+        swal({
+            title: "¡Hecho!",
+            text: '' + response.data,
+            timer: 3500,     
+            type: 'success'
+        });
+    })
+    .catch(function(error) {
+        console.log('Error: ' + error);
     });
 }

@@ -22,7 +22,7 @@
                         ?>
                     </div>
                     <div class="can-foto">
-                        <img src='image/<?php echo $candidato['photo'] ?>' />
+                        <img src='candidatos/image/<?php echo $candidato['photo'] ?>' />
                             <?php 
                                 if($candidato['id'] != 0){ 
                             ?>

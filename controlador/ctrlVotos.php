@@ -4,8 +4,13 @@
     require("../modelo/candidato.php");
     require("../modelo/voto.php");
 
-    if(isset($_POST['accion'])){
-        $accion=$_POST['accion']; 
+    $data = json_decode(file_get_contents("php://input"), true);
+    $accion = "";
+    if(isset($data['accion'])){
+        $accion = $data['accion'];
+    }
+    if(isset($_REQUEST['accion'])){
+        $accion=$_REQUEST['accion'];
     }
 
     switch ($accion) {
