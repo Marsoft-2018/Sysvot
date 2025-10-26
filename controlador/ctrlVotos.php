@@ -17,9 +17,9 @@
     	case 'RegistrarVoto':
     	    
     		$objVoto = new Voto();
-    		$objVoto->candidato = $_POST['idcandidato'];
-    		$objVoto->codEstudiante = $_POST['idest'];
-    		$objVoto->tipo = $_POST['tipo'];
+    		$objVoto->candidato = $data['idcandidato'];
+    		$objVoto->codEstudiante = $data['idest'];
+    		$objVoto->tipo = $data['tipo'];
     		$objVoto->agregar();
     		break;
     	case 'contar':
@@ -44,12 +44,12 @@
             break;
         case "controlVotacion":
             $estado = "No ha votado";
-            if($_POST['estado'] == 2){
+            if($data['estado'] == 2){
                 $estado = "Inactivo";
                 $objVoto = new Voto();
                 $objVoto->estado = $estado;
                 $objVoto->toggleVotacion();
-            }elseif($_POST['estado'] == 0){
+            }elseif($data['estado'] == 0){
                 $objVoto = new Voto();
                 $objVoto->estado = $estado;
                 $objVoto->nuevaVotacion();

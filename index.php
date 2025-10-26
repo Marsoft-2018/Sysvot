@@ -92,7 +92,8 @@
   <script src="assets/js/plugins/feather.min.js"></script>
 
   <!-- custom code -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="assets/js/plugins/sweetalert2.all.min.js"></script>
+  <script src="assets/js/plugins/axios.js"></script>
 	<script type='text/javascript' src='assets/js/custom/main.js'></script>
   
   

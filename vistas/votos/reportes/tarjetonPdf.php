@@ -161,7 +161,7 @@ ob_start();
 </body>
 </html>
 <?php
-require '../../../complementos/dompdf/vendor/autoload.php';
+require '../../../assets/vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -196,7 +196,7 @@ if (!$pdfOutput) {
     exit;
 }
 
-$pdfDir = __DIR__ . '/../../reportes/pdfs/';
+$pdfDir = __DIR__ . '/../../votos/reportes/pdfs/';
 $pdfFileName = 'tarjeton.pdf';
 $pdfFilePath = $pdfDir . $pdfFileName;
 
@@ -209,7 +209,7 @@ if (!file_exists($pdfDir)) {
 file_put_contents($pdfFilePath, $dompdf->output());
 
 // Generar una ruta accesible desde el navegador
-$publicPath = "/sisvot/vistas/reportes/pdfs/$pdfFileName";
+$publicPath = "/sysvot/vistas/votos/reportes/pdfs/$pdfFileName";
 
 echo json_encode(["file" => $publicPath]);
 exit;

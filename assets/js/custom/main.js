@@ -1,119 +1,103 @@
-function Voto1Hecho(num,codest){
-    var bloquea = document.getElementById("bloquear");
-	bloquea.style.display='block';
-        
-    swal({ 
-        title: "CONFIRMACION",
-        text: "¿Está seguro de votar por este candidato?",
-        type: "warning",
+function Voto1Hecho(idCandidato,codest,candidatoNumeroTarjeton){
+    Swal.fire({
+        title: "CONFIRMA TU VOTO",
+        text: "¿Está seguro de votar por el candidato # "+candidatoNumeroTarjeton+"?",
+        icon: "info",
         showCancelButton: true,
+        allowOutsideClick: false,
+        confirmButtonColor: "#216F21",
+        cancelButtonColor: "#d33",
+        confirmButtonText: `
+          <i class="fa fa-thumbs-up"></i> Si
+        `,
+        cancelButtonText: `
+          <i class="fa fa-thumbs-down"></i> No
+        `,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.post('../controlador/ctrlVotos.php', {
+                accion: "RegistrarVoto",
+                idcandidato: idCandidato,
+                idest: codest,
+                tipo: "Personero"
+            })
+            .then(response => {
+                Swal.fire({
+                    title: "¡Listo voto Hecho! Ahora vas a elegir al contralor",
+                    allowOutsideClick: false, 
+                    icon: "success",        
+                    preConfirm: () => {
+                        axios.post('votos/tarjetonContralor.php', { idest: codest })
+                        .then(response => {
+                            document.getElementById('principal').innerHTML = response.data;
+                        })
+                        .catch(error => {
+                            console.error('Error en la solicitud:', error);
+                        });//fin axios 2
+                        
+                    }
+                });// fin de swal
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+            });//fin axios 1           
+        }
+    });
+}
+
+function VotoHecho(idCandidato,codest,candidatoNumeroTarjeton){
+    Swal.fire({
+        title: "CONFIRMACIÓN",
+        text: "¿Está seguro de votar por el candidato # "+candidatoNumeroTarjeton+"?",
+        icon: "warning",
+        showCancelButton: true,
+        allowOutsideClick: false, 
         confirmButtonColor: "#216F21",
         cancelButtonColor: "#DD6B55",
-        confirmButtonText: "¡Claro!",
-        cancelButtonText: "No", 
-        closeOnConfirm: false,
-        closeOnCancel: true },
-
-        function(isConfirm){ 
-            if (isConfirm) {
-                swal({title:"¡Hecho! Ahora vas a elegir al contralor",
-                timer: 500,     
-                type:'success'},function(){
-                    $.ajax({
-                        type:"POST",
-                        url:"vistas/votos/tarjetonContralor.php",
-                        data:{idest:codest},
-                        success: function(data){
-                            $("#principal").html(data);
-                        }
-                    });
-                }); 
-                
-                $.ajax({
-                    type:"POST",
-                    url:"controlador/ctrlVotos.php",
-                    data:{accion:"RegistrarVoto",idcandidato:num,idest:codest,tipo:"Personero"},
-                    success: function(data){
-                        alertify.success(data);
-                    }
+        confirmButtonText: `
+          <i class="fa fa-thumbs-up"></i> Si
+        `,
+        cancelButtonText: `
+          <i class="fa fa-thumbs-down"></i> No
+        `,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.post("../controlador/ctrlVotos.php", {
+                accion: "RegistrarVoto",
+                idcandidato: idCandidato,
+                idest: codest,
+                tipo: "Contralor"
+            })
+            .then(response => {
+                Swal.fire({
+                    title: "¡Hecho!",
+                    text: "Su voto ha sido registrado. Gracias por usar SISVOT.",
+                    icon: "success",
+                    allowOutsideClick: false, 
+                    timer: 3500,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = '../index.php';
                 });
-            } else { 
-                swal({title:"¡Voto Cancelado!",
-                text:"Puede volver a elegir si lo desea...",
-                timer: 2000},function(){
-                    $("#bloquear").slideUp('fast');
-                });   
-            } 
-        });
+            })
+            .catch(error => {
+                Swal.fire("Error", "Hubo un problema al registrar el voto.", "error");
+                console.error("Error en la solicitud:", error);
+            });
+        } else {
+            Swal.fire({
+                title: "¡Voto Cancelado!",
+                text: "Puede volver a elegir si lo desea...",
+                icon: "info",
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                document.getElementById("bloquear").style.display = 'none';
+            });
+        }
+    });
 }
-/*
-function validar(){	
-	var usu = document.getElementById('usu').value;
-	var documento = document.getElementById('ident').value;
-	var formulario = document.getElementById('login');
-    if (usu=="" || documento==""){
-		alert ("Por favor ingrese los datos completos");
-	}else{
-		var conexion;
-		conexion = new XMLHttpRequest();
-		if (window.XMLHttpRequest){
-			conexion = new XMLHttpRequest();
-		}else{
-			conexion = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		conexion.onreadystatechange=function(){
-		if (conexion.readyState==4 && conexion.status==200){					    
-		  formulario.action=conexion.responseText;
-		}
-		}				
-		conexion.open("GET","autenticacion.php?usu="+usu+"&ident="+documento,false);
-		conexion.send();
-		conexion.close;		
-	}    
-}
-*/
-function VotoHecho(num,codest){
-    var bloquea = document.getElementById("bloquear");
-	bloquea.style.display='block';
-        
-    swal({ 
-        title: "CONFIRMACION",
-        text: "¿Está seguro de votar por este candidato?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#216F21",
-        cancelButtonColor: "#DD6B55",
-        confirmButtonText: "¡Claro!",
-        cancelButtonText: "No", 
-        closeOnConfirm: false,
-        closeOnCancel: false },
 
-        function(isConfirm){ 
-            if (isConfirm) {
-                swal({title:"¡Hecho!",
-                text:'Su voto ha sido registrado gracias por usar SISVOT',
-                timer: 3500,     
-                type:'success'},function(){
-                    $(location).attr('href','index.php');
-                }); 
-                
-                $.ajax({
-                    type:"POST",
-                    url:"controlador/ctrlVotos.php",
-                    data:{accion:"RegistrarVoto",idcandidato:num,idest:codest,tipo:"Contralor"},
-                    success: function(data){
-                        alertify.success(data);
-                    }
-                });
-            } else { 
-                swal({title:"¡Voto Cancelado!",
-                text:"Puede volver a elegir si lo desea...",
-                timer: 2000},function(){
-                    $("#bloquear").slideUp('fast');
-                });   
-            } 
-        });
-}
 function logear() {
     const form = document.getElementById('frmLogin');
     const formData = new FormData(form);
@@ -135,12 +119,26 @@ function logear() {
 }
 
 function administrar(pagina) {
-    document.getElementById("principal").innerHTML = "";
+    document.getElementById("principal").innerHTML = `<div class="d-flex justify-content-center">
+  <div class="spinner-border text-primary m-5" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>`;
     const accion = 'cargar';
 
     axios.post("../controlador/ctrl" + pagina + ".php", new URLSearchParams({ accion: accion }))
         .then(response => {
             document.getElementById("principal").innerHTML = response.data;
+            if(pagina =='Alumnos'){
+                // [ Immediately Show Hidden Details ]
+                $('#show-hide-res').DataTable({
+                    responsive: {
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                        type: ''
+                    }
+                    }
+                });
+            }
             // if (typeof $('.dataTable').DataTable === 'function') {
             //     $('.dataTable').DataTable();
             // }
@@ -233,25 +231,17 @@ function contarVotos(op) {
 
 function tarjetonPdf(op){
     console.log("Opcion: "+op);
-    $("#principal").html("");
+    document.getElementById("principal").innerHTML = `<div class="d-flex justify-content-center">
+    <div class="spinner-border text-primary m-5" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>`;
     var accion = "tarjetonPdf";
     var option = 'load';
     if (op == 2) {
         option = 'download';
     }
-    
-    // $.ajax({
-    //     type:"POST",
-    //     url:"controlador/ctrlVotos.php",
-    //     data:{accion:accion},
-    //     success:function(data){
-    //         $("#principal").html(data);   
-    //     },
-    //     error: function(err){
-    //         console.log('test: '+err);
-    //     }
-    // });   
-    fetch('vistas/votos/reportes/tarjetonPdf.php', {
+
+    fetch('votos/reportes/tarjetonPdf.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ 'accion': accion }) // Enviar la variable POST
@@ -268,7 +258,7 @@ function tarjetonPdf(op){
             downloadButton.style.display = "inline-block";
             downloadButton.onclick = function () {
                 window.location.href = data.file; // Descargar el archivo
-            };
+            };/**/
         } else {
             alert("Error: " + data.error);
         }
@@ -292,7 +282,7 @@ function generarPDF() {
 }
 
 function alerta(){
-    swal({
+    Swal.fire({
       title: ' ',
         html:   '<div style="text-align:left;font-size:1.5em;line-height: 3em;padding:10px;">'+
                 'Autor:<br>Ing. Jose Alfredo Tapia Arroyo.<br>' +
@@ -312,7 +302,7 @@ function controlVotacion(estado) {
         estado: estado
     })
     .then(function(response) {
-        swal({
+        Swal.fire({
             title: "¡Hecho!",
             text: '' + response.data,
             timer: 3500,     

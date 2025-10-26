@@ -31,7 +31,7 @@
         }
 
         function contar(){
-            $this->sql = "SELECT vt.Numero AS id, COUNT(vt.Numero) AS 'Votos' FROM registrovotos vt WHERE vt.Numero = ? GROUP BY vt.`Numero` ORDER BY 'Votos' DESC";
+            $this->sql = "SELECT vt.Numero AS id, COUNT(vt.Numero) AS 'Votos' FROM registrovotos vt WHERE vt.Numero = ? AND Anio = '2025' GROUP BY vt.`Numero` ORDER BY 'Votos' DESC";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
                 $stm->bindparam(1,$this->id);
@@ -44,16 +44,13 @@
         }
         
         function totalVotos(){
-            $this->sql = "SELECT vt.Numero AS id, COUNT(vt.Numero) AS 'Votos' FROM registrovotos vt GROUP BY vt.`Numero` ORDER BY 'Votos' DESC";
+            $this->sql = "SELECT vt.type, COUNT(vt.Numero) AS 'Votos' FROM registrovotos vt WHERE Anio = '2025' GROUP BY vt.`type` ORDER BY 'Votos' DESC";
             try {
                 $totalVotos = 0;
                 $stm = $this->Conexion->prepare($this->sql);
                 $stm->execute();
                 $datos = $stm->fetchall(PDO::FETCH_ASSOC);
-                foreach($datos as $votos){
-                    $totalVotos += $votos['Votos']; 
-                }
-                return $totalVotos; 
+                return $datos; 
             } catch (Exception $e) {
                 echo "Error: ".$e;
             }

@@ -1,20 +1,27 @@
+
 <?php 
 	$obj = new Student();
 ?>
-<script src="complementos/DataTables/datatables.js"></script>
-<script type="application/javascript">
-    $(document).ready( function () {
-        $('.dataTable').DataTable();
-    } );
-</script>
-<div class="row">
-    <div class="col-md-12 col-xl-12">
-        <h5 class="mb-3">LISTADO DE ALUMNOS REGISTRADOS</h5><a href='#' class='btn btn-primary' onclick='ventanaNuevoAlumno()'><i class='fa fa-plus-circle'> Agregar Alumno </i></a>
-        <div class="card tbl-card">
-        <div class="card-body">
-            <div class="table-responsive">
-            <table class="table table-hover table-borderless mb-0">
-                <thead>
+
+	<div class="row">
+		<!-- `New` Constructor table end -->
+		<!-- Immediately Show Hidden Details table start -->
+		<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header">
+			<h5 class="mb-3">LISTADO DE ALUMNOS REGISTRADOS</h5>
+			
+			<a href='#' ype="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class='fa fa-plus-circle'> Agregar Alumno </i></a><br><br>
+			<!-- <small
+				>Responsive has the ability to display the details that it has hidden in a variety of different ways. Its default is to
+				allow the end user to toggle the the display by clicking on a row and showing the information in a DataTables child
+				row</small
+			> -->
+			</div>
+			<div class="card-body">
+			<div class="dt-responsive table-responsive">
+				<table id="show-hide-res" class="display table table-striped table-hover dt-responsive nowrap" style="width: 100%">
+				<thead>
 					<tr>
 						<th>Código</th>
 						<th>Grado</th>
@@ -22,8 +29,8 @@
 						<th>Estado</th>
 						<th>Acciones</th>
 					</tr>
-                </thead>
-                <tbody>                    
+				</thead>
+				<tbody>
 					<?php 
 						foreach ($obj->listar() as $value) { ?>
 						<tr>
@@ -53,11 +60,13 @@
 					<?php 
 						}
 					?>
-                </tbody>
-            </table>
-			<a href='#' class='btn btn-primary' onclick='ventanaNuevoAlumno()'><i class='fa fa-plus-circle'> Agregar Alumno </i></a>
-            </div>
-        </div>
-        </div>
-    </div>
-</div>
+				</tbody>
+				</table>
+				<a href='#' class='btn btn-primary' onclick='ventanaNuevoAlumno()'><i class='fa fa-plus-circle'> Agregar Alumno </i></a>
+			</div>
+			</div>
+		</div>
+		</div>
+		<!-- Immediately Show Hidden Details table end -->
+	</div>
+	
