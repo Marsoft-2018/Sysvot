@@ -229,41 +229,24 @@ function contarVotos(op) {
     });
 }
 
-function tarjetonPdf(op){
-    console.log("Opcion: "+op);
-    document.getElementById("principal").innerHTML = `<div class="d-flex justify-content-center">
-    <div class="spinner-border text-primary m-5" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>`;
-    var accion = "tarjetonPdf";
-    var option = 'load';
-    if (op == 2) {
-        option = 'download';
-    }
-
-    fetch('votos/reportes/tarjetonPdf.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ 'accion': accion }) // Enviar la variable POST
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.file) {
-            // Mostrar el PDF en <object>
-            const pdfContainer = document.getElementById('principal');
-            pdfContainer.innerHTML = `<object data="${data.file}" type="application/pdf" width="100%" height="600px"></object>`;
-
-            // Mostrar botón de descarga
-            const downloadButton = document.getElementById('descargar-pdf');
-            downloadButton.style.display = "inline-block";
-            downloadButton.onclick = function () {
-                window.location.href = data.file; // Descargar el archivo
-            };/**/
+function tarjetonPdf(op) {
+    const apiPdf = '../vistas/votos/reportes/tarjetonPdf.php';
+  try {
+    const res =  axios.post(apiPdf).then(function(res){
+        console.log(res.data.status);
+        if (res.data && res.data.status === 'success') {
+        const url = res.data.url;
+        window.open(url, '_blank');
         } else {
-            alert("Error: " + data.error);
+        alert('Error generando PDF: ' + (res.data.error || 'Desconocido'));
         }
-    })
-    .catch(error => console.error('Error:', error));
+    });
+    
+    
+  } catch (err) {
+    console.error(err);
+    alert('Error al generar PDF. Asegúrate de tener DOMPDF instalado y configurado.');
+  }
 }
 
 function generarPDF() {

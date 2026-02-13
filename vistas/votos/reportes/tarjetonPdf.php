@@ -55,16 +55,13 @@ ob_start();
                 border: 1px solid #1D1D23;
                 background-color: #fff;
                 margin: 5px;
-                width: 50%;
+                width: 100%;
                 padding: 5px;
                 border-radius: 5px;
             }
-            table tr{     
-            }
-
             .foto{
                 height:120px;
-                padding: 5px;
+                padding: 2px;
             }
 
             .foto img{
@@ -74,8 +71,7 @@ ob_start();
 
             .datos{           
                 border: 1px solid #1D1D23;
-                padding: 10px 20px;
-                box-sizing: border-box;
+                padding: 5px 10px;
                 color: #fff;
                 background-color: #1d3d23;
             }
@@ -84,7 +80,7 @@ ob_start();
                 font-family: 'Montserrat', sans-serif;
                 text-transform: uppercase;
                 border-bottom: 1px solid #cecece;
-                font-size: 20px;
+                font-size: 5px;
             }
 
             .datos .numero{
@@ -110,27 +106,29 @@ ob_start();
         <hr>
         <div class="container">
             <table>
+                <tr>    
             <?php 
                 require("../../../modelo/Conect.php");
                 require("../../../modelo/candidato.php");
                 $objCandidato = new Candidato();
                 $total_filas = ceil($objCandidato->contar()/2);
-            foreach ($objCandidato->listarPersoneros() as $candidato) { // Ruta de la imagen (método HTTP recomendado)
-
-                if($candidato['id'] != 0 && $candidato['id'] != 99){ 
-                    $imgUrl = "http://localhost/sisvot/image/".$candidato['photo']."";
-                }else{
-                    $imgUrl = "http://localhost/sisvot/image/blanco.png";
-
-                }
-                ?>
-                <tr>                
-                    <td>
+            foreach ($objCandidato->listarPersoneros() as $candidato) { 
+                // Ruta de la imagen (método HTTP recomendado)
+                $pathFoto = __DIR__ . "../../../candidatos/image/".$candidato['photo']."";
+                $imgBase64 = '';
+                    if (file_exists($pathFoto)) {
+                        $imgData = base64_encode(file_get_contents($pathFoto));
+                        $imgBase64 = 'data:image/png;base64,' . $imgData;
+                    }
+                     if ($imgBase64): $imgUrl = '<img src="'.$imgBase64.'" alt="foto" />'; endif;
+                     
+                ?>            
+                    <td style="width: 50px;">
                         <div class="foto">
-                            <img src="<?php echo $imgUrl  ?>"/> 
+                            <?php echo  $imgUrl  ?> 
                         </div>       			
                     </td>
-                    <td>
+                    <td style="width: 100px;">
                         <div class="datos" style="background-color: <?php echo $candidato['color']; ?>;">
                             <?php 
                                 $color_fuente = "#fff";
@@ -152,8 +150,8 @@ ob_start();
                             </div>
                         </div>
                     </td>
-                </tr>
             <?php }	?>
+                </tr>
 
             </table>
         </div>
@@ -161,42 +159,19 @@ ob_start();
 </body>
 </html>
 <?php
+// Contenido HTML para el PDF
+
+$html = ob_get_clean();
+
+//iniciando la configuracion del dompdf
 require '../../../assets/vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-// Configurar opciones de Dompdf (por ejemplo, permitir fuentes remotas)
-$options = new Options();
-$options->set('defaultFont', 'Arial');
-$options->set('isRemoteEnabled', true); // Habilitar carga de imágenes remotas
-$options->set('isHtml5ParserEnabled', true);
 
-$dompdf = new Dompdf($options);
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Contenido HTML para el PDF
-
-$html = ob_get_clean();
-
-// Cargar contenido HTML en Dompdf
-$dompdf->loadHtml($html);
-
-// Configurar tamaño y orientación del papel
-$dompdf->setPaper('Letter', 'portrait');
-
-// Renderizar el PDF
-$dompdf->render();
-$pdfOutput = $dompdf->output();
-
-if (!$pdfOutput) {
-    echo json_encode(["error" => "No se generó el PDF correctamente."]);
-    exit;
-}
-
-$pdfDir = __DIR__ . '/../../votos/reportes/pdfs/';
+/*$pdfDir = __DIR__ . '/../../votos/reportes/pdfs/';
 $pdfFileName = 'tarjeton.pdf';
 $pdfFilePath = $pdfDir . $pdfFileName;
 
@@ -213,5 +188,33 @@ $publicPath = "/sysvot/vistas/votos/reportes/pdfs/$pdfFileName";
 
 echo json_encode(["file" => $publicPath]);
 exit;
+ */
+
+// Generate PDF with DOMPDF
+try {
  
+    $options = new Options();
+$options->set('isRemoteEnabled', true);
+$options->set('defaultFont', 'DejaVu Sans');
+$dompdf = new Dompdf($options);
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('Letter', 'portrait');
+    $dompdf->render();
+
+    $output = $dompdf->output();
+    $dir = __DIR__ . '/pdfs';
+    if (!is_dir($dir)) mkdir($dir, 0755, true);
+    $filename = 'tarjeton.pdf';
+    $filepath = $dir . '/' . $filename;
+    file_put_contents($filepath, $output);
+
+    $baseUrl = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}" .
+    dirname($_SERVER['SCRIPT_NAME'], 2); // sube 2 niveles desde /api/
+
+    $url = $baseUrl . '/reportes/pdfs/' . $filename;
+    echo json_encode(['status'=>'success','url'=>$url]);
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error'=>$e->getMessage()]);
+}
 ?>

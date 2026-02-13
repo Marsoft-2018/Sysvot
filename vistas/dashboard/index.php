@@ -365,7 +365,9 @@
   <!-- [ Main Content ] start -->
   <div class="pc-container">
     <div class="pc-content" id="principal">
-      <object data="\/sysvot\/vistas\/votos\/reportes\/pdfs\/tarjeton.pdf" width="100%" height="600px"></object>
+      <object data="/sysvot/vistas/votos/reportes/pdfs/tarjeton.pdf" width="100%" height="600px">
+        
+      </object>
       <?php
           $clase = ["bg-light-primary border border-primary","bg-light-success border border-success","bg-light-warning border border-warning","bg-light-danger border border-danger"];
          
