@@ -230,8 +230,15 @@ function contarVotos(op) {
 }
 
 function tarjetonPdf(op) {
-    const apiPdf = '../vistas/votos/reportes/tarjetonPdf.php';
-  try {
+    let apiPdf= "";
+    if(op == 1){
+        apiPdf = '../vistas/votos/reportes/tarjetonPdf.php';
+    }else if(op == 2){
+        apiPdf = '../vistas/votos/reportes/tarjetonPersoneroPdf.php';
+    }else if(op == 3){
+        apiPdf = '../vistas/votos/reportes/tarjetonContralorPdf.php';
+    }
+  try {    
     const res =  axios.post(apiPdf).then(function(res){
         console.log(res.data.status);
         if (res.data && res.data.status === 'success') {
@@ -241,27 +248,36 @@ function tarjetonPdf(op) {
         alert('Error generando PDF: ' + (res.data.error || 'Desconocido'));
         }
     });
-    
-    
   } catch (err) {
     console.error(err);
     alert('Error al generar PDF. Asegúrate de tener DOMPDF instalado y configurado.');
   }
 }
 
-function generarPDF() {
-    fetch('generar_pdf.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.file) {
-                // Crear la etiqueta <object> y asignarle la ruta del PDF
-                const pdfContainer = document.getElementById('pdf-container');
-                pdfContainer.innerHTML = `<object data="${data.file}" type="application/pdf" width="100%" height="600px"></object>`;
-            } else {
-                alert("Error al generar el PDF.");
-            }
-        })
-        .catch(error => console.error('Error:', error));
+
+function actaPdf(op) {
+    let apiPdf= "";
+    if(op == 1){
+        apiPdf = '../vistas/votos/reportes/actaFinalPdf.php';
+    }else if(op == 2){
+        
+    }else if(op == 3){
+       
+    }
+  try {    
+    const res =  axios.post(apiPdf).then(function(res){
+        console.log(res.data.status);
+        if (res.data && res.data.status === 'success') {
+        const url = res.data.url;
+        window.open(url, '_blank');
+        } else {
+        alert('Error generando PDF: ' + (res.data.error || 'Desconocido'));
+        }
+    });
+  } catch (err) {
+    console.error(err);
+    alert('Error al generar PDF. Asegúrate de tener DOMPDF instalado y configurado.');
+  }
 }
 
 function alerta(){

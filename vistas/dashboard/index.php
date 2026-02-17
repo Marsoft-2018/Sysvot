@@ -111,9 +111,15 @@
             <span class="pc-mtext">Nueva Votación</span>
           </a>
         </li>
+        <li class="pc-item">
+          <a href="#" onclick='actaPdf(1)' id='tarjetonPdf' class="pc-link">
+            <span class="pc-micon"><i class="ti ti-file"></i></span>
+            <span class="pc-mtext">Generar acta final pdf</span>
+          </a>
+        </li>
 
         <li class="pc-item pc-caption">
-          <label>Reportes</label>
+          <label>Reportes/pdf</label>
           <i class="ti ti-brand-chrome"></i>
         </li>
         <li class="pc-item">
@@ -131,7 +137,19 @@
         <li class="pc-item">
           <a href="#" onclick='tarjetonPdf(1)' id='tarjetonPdf' class="pc-link">
             <span class="pc-micon"><i class="ti ti-ad-2"></i></span>
-            <span class="pc-mtext">Tarjetón pdf</span>
+            <span class="pc-mtext">Tarjetón completo</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="#" onclick='tarjetonPdf(2)' id='tarjetonPersoneroPdf' class="pc-link">
+            <span class="pc-micon"><i class="ti ti-ad-2"></i></span>
+            <span class="pc-mtext">Tarjetón solo personeros</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="#" onclick='tarjetonPdf(3)' id='tarjetonContralorPdf' class="pc-link">
+            <span class="pc-micon"><i class="ti ti-ad-2"></i></span>
+            <span class="pc-mtext">Tarjetón solo contalores</span>
           </a>
         </li>
       </ul>
@@ -203,7 +221,7 @@
             </div>
             <div class="dropdown-divider"></div>
             <div class="dropdown-header px-0 text-wrap header-notification-scroll position-relative" style="max-height: calc(100vh - 215px)">
-              <div class="list-group list-group-flush w-100">
+              <!--<div class="list-group list-group-flush w-100">
                 <a class="list-group-item list-group-item-action">
                   <div class="d-flex">
                     <div class="flex-shrink-0">
@@ -252,7 +270,7 @@
                     </div>
                   </div>
                 </a>
-              </div>
+              </div>-->
             </div>
             <div class="dropdown-divider"></div>
             <div class="text-center py-2">
@@ -616,9 +634,9 @@
       </div>
     </div>
   </div>
-  <!-- [Page Specific JS] start -->
+  <!-- [Page Specific JS] start 
   <script src="../assets/js/plugins/apexcharts.min.js"></script>
-  <script src="../assets/js/pages/dashboard-default.js"></script>
+  <script src="../assets/js/pages/dashboard-default.js"></script>-->
   <!-- [Page Specific JS] end -->
   <!-- Required Js -->
   <script src="../assets/js/plugins/popper.min.js"></script>

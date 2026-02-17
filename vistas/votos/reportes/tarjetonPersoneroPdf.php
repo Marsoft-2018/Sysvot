@@ -158,59 +158,6 @@ ob_start();
                 <?php }	?>
             </tr>
         </table>
-        <hr>
-        <br><br><br>
-        <hr>
-        <div class="tituloTarjeton">
-            <h3>TARJETON PARA CONTRALORES</h3>
-        </div>
-        <hr>
-        <table>
-            <tr>    
-                <?php 
-                    $total_filas = ceil($objCandidato->contar()/2);
-                    foreach ($objCandidato->listarContralores() as $candidato) { 
-                    // Ruta de la imagen (método HTTP recomendado)
-                    $pathFoto = __DIR__ . "../../../candidatos/image/".$candidato['photo']."";
-                    $imgBase64 = '';
-                        if (file_exists($pathFoto)) {
-                            $imgData = base64_encode(file_get_contents($pathFoto));
-                            $imgBase64 = 'data:image/png;base64,' . $imgData;
-                        }
-                        if ($imgBase64): $imgUrl = '<img src="'.$imgBase64.'" alt="foto" />'; endif;
-                        
-                ?>   
-                <td>
-                    <div class="container">
-                        <div class="datos" style="background-color: <?php echo $candidato['color']; ?>;">
-                            <?php 
-                                $color_fuente = "#fff";
-                                if($candidato['id'] == 0 || $candidato['id'] == 99){ 
-                                    $color_fuente = "#000";
-                                }
-                            ?>
-                            <div class="foto">
-                                <?php echo  $imgUrl  ?> 
-                            </div>                   
-                            <div class="numero">
-                                <h3>
-                                    <?php if($candidato['id'] != 0 && $candidato['id'] != 99){ echo "# ".$candidato['numero']; } ?>                                               
-                                </h3>
-                            </div> 
-                            <div class="nombre" style="color: <?php echo $color_fuente; ?>;">
-                                <h6>
-                                    <?php 
-                                        echo $candidato['firstName']." ".$candidato['secondName']." ".$candidato['firstLastName']." ".$candidato['secondLastName'];
-                                    ?> 
-                                </h6>
-                            </div>
-
-                        </div>
-                    </div>
-                </td>
-                <?php }	?>
-            </tr>
-        </table>
     </div>
 </body>
 </html>
