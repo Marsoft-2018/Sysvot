@@ -1,19 +1,28 @@
 <?php
     require("../modelo/Conect.php");
     require("../modelo/Student.php");
+    $accion = "";
     if(isset($_POST['accion'])){
-        $accion=$_POST['accion']; 
+        $accion = $_POST['accion'];
+    }else{
         
-        if($accion=='cargar'){    
+        $json = file_get_contents('php://input');
 
-            include("../vistas/estudiantes.php");
+        // Decodifica el JSON a un objeto o array asociativo de PHP
+        $data = json_decode($json, true);
 
-        }elseif($accion == 'Eliminar'){   
-            $alu = new Student();	
-            $alu->id = $_POST['id'];            
-            $alu->eliminar();
-            
-        }elseif($accion=='Agregar'){ 
+        // Accede a tus variables
+        $accion = $data['accion'] ?? '';
+    }
+
+    switch ($accion) {
+        case 'new':
+            include("../vistas/formulario_estudiante.php");
+            break;
+        case 'edit':
+            include("../vistas/formulario_estudiante.php");
+            break;
+        case 'add':
                 
             $alu = new Student();	
             $alu->id = $_POST['id'];
@@ -25,15 +34,21 @@
             $alu->secondName = $_POST['secondName'];
             $alu->gender = $_POST['sexo'];
             $alu->agregar();
-
-        }elseif( $accion == "ventanaNuevo" || $accion == "ventanaEditar"){
+            break;
+        case 'update':
             include("../vistas/formulario_estudiante.php");
-           
-        }
-    }else{
-        echo "No se recibe una accion para ejecutar";
-        $accion='nada';
+            break;
+        case 'delete':
+            $alu = new Student();	
+            $alu->id = $_POST['id'];            
+            $alu->eliminar();
+            break;
+        case 'cargar':
+            include("../vistas/estudiantes.php");
+            break;
+        default:
+            echo "No se recibe una accion para ejecutar";
+            break;
     }
-
     
 ?>

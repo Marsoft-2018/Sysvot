@@ -9,7 +9,7 @@
     $sexo = "";
     $foto = "Enblanco.png";
     $fotoAnterior = "0";
-    $funcion = "agregarEstudiante()";
+    $funcion = "addStudent()";
 
     if(isset($_POST['codigo'])){
         $objEst = new Student();
@@ -28,51 +28,13 @@
                 $foto = $foto_cargada['FOTO'];
                 $fotoAnterior = $foto_cargada['FOTO'];
             }
-            $funcion = "modificarEstudiante()";
+            $funcion = "updateStudent()";
         }
     }
 
 ?>
 
 <div style="text-align:left;font-size:14px;line-height: 3em;padding:10px;width:95%;">
-    <div class='col-md-2'>                    
-        <form id='cambioFoto' name='cambioFoto' enctype='multipart/form-data' method='post' target='resultadoEnvio' onSubmit='cambiarFoto2(this.id)'>
-            <div id='fotoVistaPrevia'>                                   
-                <button href='#' id='elegirIMG' class='btn btn-default' onclick='elegirIMG(this)'>Cambiar Imágen</button>
-                   <img src='IMG/<?php echo $foto; ?>' id='fotoUs' style='margin:0px;height:130px;width:100px;box-shadow: 2px 5px 5px rgba(153,153,153,1);background-color:#ffffff;border-radius:10px;'>
-                    <input type='hidden' value='<?php echo $fotoAnterior; ?>' name='fotoAnterior'>
-                    <input type='file' id='imgProfe' name='imgProfe' onchange='previsualizar(this)' />
-            </div>                            
-            <iframe name='resultadoEnvio' style='display:none;'></iframe>
-            <div id='mostrarMensajeImagen'></div>
-            <input type='hidden' value='<?php echo $id; ?>' name='idUsuario'>
-            <input type='submit' value='Guardar Imágen' id='guardarIMG' class='btn btn-primary' style='margin-top:20px;display:none;width:98%;'>
-        </form>
-        </div>
-        <div class='row'>
-        <div class='col-md-6'>
-            <iframe name='cuadroDeCarga' style='display:none'></iframe>            
-        </div>
-    </div>
-    <script>
-        $('#fotoVistaPrevia').hover(
-            function() {
-                $(this).find('#elegirIMG').fadeIn();
-            }, function() {
-                $(this).find('a').fadeOut();
-            }
-        );
-        $('#elegirIMG').on('click', function(e) {
-             e.preventDefault();
-            $('#imgProfe').click();
-        });
-        $('#guardarIMG').click(function(){
-            $('#guardarIMG').fadeOut();
-        });
-        
-    </script>  
-
-
     <label>Código del Estudiante:</label>
     <input type="text" placeholder="Código del estudiante" id="id" value="<?php echo $id; ?>" class="form form-control ancho" title="Recuerde que este código será el que utilizará el estudiante para ingresar al sistema para votar"/></br>
     <label>1er. Nombre:</label><input type="text" placeholder="Primer Nombre" id="nombre1" value="<?php echo $nombre1; ?>" class="form form-control ancho" /></br>
@@ -110,3 +72,4 @@
     </div>
 </div>
 <button class='btn btn-primary' onclick = '<?php echo $funcion; ?>' style='padding: 10px 30px; margin-top: 20px; width: 90%'>Guardar</button>
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

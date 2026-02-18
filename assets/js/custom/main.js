@@ -258,7 +258,7 @@ function tarjetonPdf(op) {
 function actaPdf(op) {
     let apiPdf= "";
     if(op == 1){
-        apiPdf = '../vistas/votos/reportes/actaFinalPdf.php';
+        apiPdf = '../vistas/votos/reportes/actaFinal.php';
     }else if(op == 2){
         
     }else if(op == 3){

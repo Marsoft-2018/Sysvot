@@ -11,7 +11,7 @@
 			<div class="card-header">
 			<h5 class="mb-3">LISTADO DE ALUMNOS REGISTRADOS</h5>
 			
-			<a href='#' ype="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class='fa fa-plus-circle'> Agregar Alumno </i></a><br><br>
+			<a href='#' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="newStudent()"><i class='fa fa-plus-circle'> Agregar Alumno </i></a><br><br>
 			<!-- <small
 				>Responsive has the ability to display the details that it has hidden in a variety of different ways. Its default is to
 				allow the end user to toggle the the display by clicking on a row and showing the information in a DataTables child

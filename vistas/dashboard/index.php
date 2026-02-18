@@ -383,9 +383,6 @@
   <!-- [ Main Content ] start -->
   <div class="pc-container">
     <div class="pc-content" id="principal">
-      <object data="/sysvot/vistas/votos/reportes/pdfs/tarjeton.pdf" width="100%" height="600px">
-        
-      </object>
       <?php
           $clase = ["bg-light-primary border border-primary","bg-light-success border border-success","bg-light-warning border border-warning","bg-light-danger border border-danger"];
          
@@ -617,18 +614,16 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <h5 class="modal-title" id="modalTitle">Modal title</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="bodyForm">
             ...
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Understood</button>
+          <div class="modal-footer" id="footerModal">
           </div>
         </div>
       </div>
@@ -673,6 +668,7 @@
   <script src="../assets/js/plugins/sweetalert2.all.min.js"></script>
   <script src="../assets/js/plugins/axios.js"></script>
 	<script type='text/javascript' src='../assets/js/custom/main.js'></script>
+	<script type='text/javascript' src='../assets/js/custom/students.js'></script>
 
 </body>
 <!-- [Body] end -->
