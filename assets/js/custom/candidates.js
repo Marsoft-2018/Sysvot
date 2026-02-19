@@ -1,13 +1,28 @@
 
-const url= "../controlador/ctrlStudents.php";
-async function newStudent(){
+const urlCandidates= "../controlador/ctrlCandidatos.php";
+async function newCandidate(candidateType){
   document.getElementById("footerModal").innerHTML = "";
+  document.getElementById("bodyForm").innerHTML = `<div class="d-flex justify-content-center">
+  <div class="spinner-border text-primary m-5" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>`;
     try {    
-    const res = await axios.post(url,{accion:"new"}).then(function(res){
+    const res = await axios.post(urlCandidates,{accion:"new", candidateType: candidateType}).then(function(res){
         if (res.data) {
             
-            document.getElementById("modalTitle").innerHTML = "Nuevo estudiante";
+            document.getElementById("modalTitle").innerHTML = "Nuevo candidato";
             document.getElementById("bodyForm").innerHTML = res.data;
+            $('#show-hide-candidate').DataTable({
+                responsive: {
+                details: {
+                    display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                    type: ''
+                }
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.3.7/i18n/es-ES.json',
+                }
+            });
 
         } else {
         alert('Error generando el formulario: ' + (res.data.error || 'Desconocido'));
@@ -19,13 +34,13 @@ async function newStudent(){
   }
 }
 
-async function indexStudent(){
+async function indexCandidates(){
     document.getElementById("principal").innerHTML = `<div class="d-flex justify-content-center">
   <div class="spinner-border text-primary m-5" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>`;
     try {    
-    const res = await axios.post(url,
+    const res = await axios.post(urlCandidates,
       {accion:"load"}).then(function(res){
         if (res.data) {
             document.getElementById("principal").innerHTML = res.data;
@@ -35,9 +50,6 @@ async function indexStudent(){
                     display: $.fn.dataTable.Responsive.display.childRowImmediate,
                     type: ''
                 }
-                },
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/2.3.7/i18n/es-ES.json',
                 }
             });
         } else {
@@ -50,7 +62,7 @@ async function indexStudent(){
   }
 }
 
-async function addStudent(){
+async function addCandidates(){
   document.getElementById("footerModal").innerHTML = `<div class="d-flex justify-content-center">
   <div class="spinner-border text-primary m-5" role="status">
     <span class="visually-hidden">Loading...</span>
@@ -64,7 +76,7 @@ async function addStudent(){
       grade = document.getElementById("grade").value;
       group = document.getElementById("group").value;
       gender = document.getElementById("gender").value;
-    const res = await axios.post(url,
+    const res = await axios.post(urlCandidates,
         {accion:"add",
           id:id,
           firstName:firstName,
@@ -79,13 +91,13 @@ async function addStudent(){
         if (res.data) { 
           Swal.fire({
               title: "¡Hecho!",
-              text: "El estudiante se guardó satisfactoriamente",
+              text: "El candidato se guardó satisfactoriamente",
               icon: "success",
               allowOutsideClick: false, 
               timer: 1500,
               showConfirmButton: false
           }).then(() => {
-            indexStudent();
+            indexCandidate();
           }); 
         } else {
         alert('Error generando el formulario: ' + (res.data.error || 'Desconocido'));
@@ -97,13 +109,13 @@ async function addStudent(){
   }
 }
 
-async function editStudent(id){
+async function editCandidate(id){
   document.getElementById("footerModal").innerHTML = "";
     try {    
-    const res = await axios.post(url,{accion:"edit",id:id}).then(function(res){
+    const res = await axios.post(urlCandidates,{accion:"edit",id:id}).then(function(res){
         if (res.data) {
             
-            document.getElementById("modalTitle").innerHTML = "Editar estudiante";
+            document.getElementById("modalTitle").innerHTML = "Editar candidato";
             document.getElementById("bodyForm").innerHTML = res.data;
 
         } else {
@@ -116,7 +128,7 @@ async function editStudent(id){
   }
 }
 
-async function updateStudent(oldId){
+async function updateCandidate(oldId){
   document.getElementById("footerModal").innerHTML = `<div class="d-flex justify-content-center">
   <div class="spinner-border text-primary m-5" role="status">
     <span class="visually-hidden">Loading...</span>
@@ -130,7 +142,7 @@ async function updateStudent(oldId){
       grade = document.getElementById("grade").value;
       group = document.getElementById("group").value;
       gender = document.getElementById("gender").value;
-    const res = await axios.post(url,
+    const res = await axios.post(urlCandidates,
         {accion:"update",
           oldId: oldId,  
           id:id,
@@ -146,13 +158,13 @@ async function updateStudent(oldId){
         if (res.data) {           
                     Swal.fire({
               title: "¡Hecho!",
-              text: "El estudiante se guardó satisfactoriamente",
+              text: "El candidato se guardó satisfactoriamente",
               icon: "success",
               allowOutsideClick: false, 
               timer: 1500,
               showConfirmButton: false
           }).then(() => {
-            indexStudent();
+            indexCandidate();
           }); 
 
         } else {
@@ -166,10 +178,10 @@ async function updateStudent(oldId){
 }
 
 
-function deleteStudent(id){
+function deleteCandidate(id){
   Swal.fire({
-        title: "Eliminar estudiante",
-        text: "¿Deseas continuar con la eliminación del estudiante?",
+        title: "Eliminar candidato",
+        text: "¿Deseas continuar con la eliminación del candidato?",
         icon: "error",
         showCancelButton: true,
         allowOutsideClick: false,
@@ -183,7 +195,7 @@ function deleteStudent(id){
         `,
     }).then((result) => {
         if (result.isConfirmed) {
-            axios.post(url, {
+            axios.post(urlCandidates, {
                 accion: "delete",
                 id: id
             })
@@ -193,7 +205,7 @@ function deleteStudent(id){
                     allowOutsideClick: false, 
                     icon: "success",        
                     preConfirm: () => {
-                        indexStudent();
+                        indexCandidate();
                     }
                 });// fin de swal
             })

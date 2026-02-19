@@ -14,7 +14,8 @@
                 </thead>
                 <tbody>
                     <?php 
-                        foreach ($obj->listarPersoneros() as $candidato) { 
+                        $objCandidato = new Candidato();
+                        foreach ($objCandidato->listarPersoneros() as $candidato) { 
 
                         ?>
                         <tr>
@@ -50,7 +51,7 @@
                     ?>
                     <tr>
                         <td colspan='4'>
-                            <a href='#' class='btn btn-primary' id='Candidatos' onclick='cargarNuevoCandidato()'>Nuevo Candidato</a>
+                            <a href='#' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="newCandidate(1)"><i class='fa fa-plus-circle'> Nuevo Candidato </i></a><br><br>
                         </td>
                     </tr>
                 </tbody>
@@ -77,7 +78,7 @@
                 </thead>
                 <tbody>                    
                     <?php 
-                        foreach ($obj->listarContralores() as $candidato) { 
+                        foreach ($objCandidato->listarContralores() as $candidato) { 
 
                         ?>
                         <tr>
@@ -113,7 +114,7 @@
                     ?>
                     <tr>
                         <td colspan='4'>
-                            <a href='#' class='btn btn-primary' id='Candidatos' onclick='cargarNuevoCandidato()'>Nuevo Candidato</a>
+				            <a href='#' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="newCandidate(2)"><i class='fa fa-plus-circle'> Nuevo Candidato </i></a><br><br>			
                         </td>
                     </tr>
                 </tbody>

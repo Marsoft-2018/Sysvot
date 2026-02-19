@@ -1,60 +1,34 @@
 <?php
     class Candidato extends Conexion{
         public $id;
-        public $grade;
-        public $group;
-        public $firstLastName;
-        public $secondLastName;
-        public $firstName;
-        public $secondName;
-        public $status;
-        public $institucionId;
-        public $gender;
-        public $role;
-        public $password;
+        public $numero;
+        public $photo;
+        public $studentId;
+        public $color;
+        public $partido;
+        public $type;
 
         public $sql;
-        function agregar(){
-            $this->sql = "INSERT INTO students (id,`grade`,`group`,`firstLastName`,`secondLastName`,`firstName`,`secondName`,`gender`) VALUES (?,?,?,?,?,?,?,?)";
+        function add(){
+            $this->sql = "INSERT INTO candidatos(numero, photo, studentId, color, partido, `type`)  VALUES (?,?,?,?,?,?)";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
-                $stm->bindparam(1,$this->id);
-                $stm->bindparam(2,$this->grade);
-                $stm->bindparam(3,$this->group);
-                $stm->bindparam(4,$this->firstLastName);
-                $stm->bindparam(5,$this->secondLastName);
-                $stm->bindparam(6,$this->firstName);
-                $stm->bindparam(7,$this->secondName);
-                $stm->bindparam(8,$this->gender);
+                $stm->bindparam(1,$this->numero);
+                $stm->bindparam(2,$this->photo);
+                $stm->bindparam(3,$this->studentId);
+                $stm->bindparam(4,$this->color);
+                $stm->bindparam(5,$this->partido);
+                $stm->bindparam(6,$this->type);
                 if ($stm->execute()) {
                    echo "Registro agregado con éxito";
                 }
-                return $datos;
             } catch (Exception $e) {
                 echo "Error: ".$e;
             }
         }
         
-        function Guardar($datos){
-            $cara;            
-            //var_dump($datos); 
-            foreach($datos as $valores){ 
-             
-                $this->sql = "INSERT INTO `candidatos` (`photo`, `id`) VALUES (?, '$valores');";
-                try {
-                    $stm = $this->Conexion->prepare($this->sql);
-                    $stm->bindparam(1,$cara);
-                    if ($stm->execute()) {
-                        echo '<div class="alert alert-success alert-dismissable" style="margin:0 auto;margin-top:20px;width:50%;">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        Se agregó con éxito los registros de los candidatos.
-                    </div>';
-                    }
-                    return $datos;
-                } catch (Exception $e) {
-                    echo "Error: ".$e;
-                }   
-            }
+        function addPhoto($datos){
+            
         }//ok
 
         function listarPersoneros(){
@@ -80,7 +54,7 @@
             }
         }
 
-        function buscar(){
+        function load(){
             $this->sql ="SELECT * FROM students WHERE id = ? ORDER BY grade, group, firstLastName, secondLastName, firstName, secondName DESC";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
@@ -93,7 +67,7 @@
             }
         }
 
-        function eliminar(){
+        function delete(){
             $this->sql = "DELETE FROM candidatos WHERE id= ?";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
@@ -122,10 +96,15 @@
             }
         }
         
-        function elegibles(){
-            $this->sql = "SELECT e.*,c.`id` AS candidatoId FROM students e LEFT JOIN candidatos c ON c.`studentId` = e.`id` WHERE grade='11' ORDER BY grade, `group`, firstLastName,secondLastName,firstName,secondName DESC";
+        function elegibles($candidateType){
+            $grade = 11;
+            if($candidateType == 2){
+                $grade = 10;
+            }
+            $this->sql = "SELECT e.*,c.`id` AS candidatoId FROM students e LEFT JOIN candidatos c ON c.`studentId` = e.`id` WHERE grade= ? ORDER BY grade, `group`, firstLastName,secondLastName,firstName,secondName DESC";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
+                $stm->bindparam(1,$grade);
                 $stm->execute();
                 $datos = $stm->fetchall(PDO::FETCH_ASSOC);
                 return $datos;

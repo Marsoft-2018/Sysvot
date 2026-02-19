@@ -1,5 +1,6 @@
 <?php
     class Student extends Conexion{
+        public $oldId;
         public $id;
         public $grade;
         public $group;
@@ -14,8 +15,8 @@
         public $password;
 
         public $sql;
-        function agregar(){
-            $this->sql = "INSERT INTO students (id, grade, group, firstLastName, secondLastName, firstName, secondName, gender) VALUES (?,?,?,?,?,?,?,?)";
+        function add(){
+            $this->sql = "INSERT INTO students (id, grade, `group`, firstLastName, secondLastName, firstName, secondName, gender) VALUES (?,?,?,?,?,?,?,?)";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
                 $stm->bindparam(1,$this->id);
@@ -29,13 +30,12 @@
                 if ($stm->execute()) {
                    echo "Registro agregado con éxito";
                 }
-                return $datos;
             } catch (Exception $e) {
                 echo "Error: ".$e;
             }
         }
 
-        function listar(){
+        function list(){
             $this->sql = "SELECT * FROM students ORDER BY grade,`group`, firstLastName,secondLastName,firstName,secondName DESC";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
@@ -47,11 +47,12 @@
             }
         }
 
-        function buscar(){
-             $this->sql = "SELECT  `id`, `grade`, `group`, `firstLastName`, `secondLastName`, `firstName`, `secondName`, `status`, `institucionId`, `gender`, `role`, `password`  FROM students WHERE id = '".$this->id."' ORDER BY grade,`group`, firstLastName,secondLastName,firstName,secondName DESC ";
+        function load(){
+             $this->sql = "SELECT  `id`, `grade`, `group`, `firstLastName`, `secondLastName`, `firstName`, `secondName`, `status`, `institucionId`, `gender`, `role`, `password`  FROM students WHERE id = ? ORDER BY grade,`group`, firstLastName,secondLastName,firstName,secondName DESC ";
 
              try {
                 $stm = $this->Conexion->prepare($this->sql);
+                $stm->bindparam(1,$this->id);
                 $stm->execute();
                 $datos = $stm->fetchall(PDO::FETCH_ASSOC);
                 return $datos;
@@ -61,7 +62,7 @@
 
         }
 
-        function eliminar(){
+        function delete(){
             $this->sql = "DELETE FROM students WHERE id= ?";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
@@ -74,8 +75,25 @@
             }
         }
         
-        function Actualizar(){
-            
+        function update(){
+            $this->sql = "UPDATE students SET id = ?, grade = ?, `group` = ?, firstLastName = ?, secondLastName = ?, firstName = ?, secondName = ?, gender=? WHERE id= ?";
+            try {
+                $stm = $this->Conexion->prepare($this->sql);
+                $stm->bindparam(1,$this->id);
+                $stm->bindparam(2,$this->grade);
+                $stm->bindparam(3,$this->group);
+                $stm->bindparam(4,$this->firstLastName);
+                $stm->bindparam(5,$this->secondLastName);
+                $stm->bindparam(6,$this->firstName);
+                $stm->bindparam(7,$this->secondName);
+                $stm->bindparam(8,$this->gender);
+                $stm->bindparam(9,$this->oldId);
+                if ($stm->execute()) {
+                   echo "Registro actualizado con éxito";
+                }
+            } catch (Exception $e) {
+                echo "Error: ".$e;
+            }
         }
         
         function fotoCandidato(){

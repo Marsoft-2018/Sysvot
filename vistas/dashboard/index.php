@@ -71,15 +71,15 @@
           </a>
         </li>
         <li class="pc-item">
-          <a href="#" onclick='administrar(this.id)' id='Candidatos' class="pc-link">
+          <a href="#" onclick='indexCandidates()' id='Candidatos' class="pc-link">
             <span class="pc-micon"><i class="ti ti-user-check"></i></span>
             <span class="pc-mtext">Candidatos</span>
           </a>
         </li>
         <li class="pc-item">
-          <a href="#" onclick='administrar(this.id)' id='Alumnos' class="pc-link">
+          <a href="#" onclick='indexStudent()' id='Alumnos' class="pc-link">
             <span class="pc-micon"><i class="ti ti-file-certificate"></i></span>
-            <span class="pc-mtext">Alumnos</span>
+            <span class="pc-mtext">Estudiantes</span>
           </a>
         </li>
 
@@ -669,6 +669,7 @@
   <script src="../assets/js/plugins/axios.js"></script>
 	<script type='text/javascript' src='../assets/js/custom/main.js'></script>
 	<script type='text/javascript' src='../assets/js/custom/students.js'></script>
+	<script type='text/javascript' src='../assets/js/custom/candidates.js'></script>
 
 </body>
 <!-- [Body] end -->

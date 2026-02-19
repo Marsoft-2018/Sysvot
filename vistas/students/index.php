@@ -32,7 +32,7 @@
 				</thead>
 				<tbody>
 					<?php 
-						foreach ($obj->listar() as $value) { ?>
+						foreach ($obj->list() as $value) { ?>
 						<tr>
 							<td><?php echo $value['id'] ?></td>
 							<td><?php echo $value['grade']."°" ?></td>
@@ -46,11 +46,11 @@
 									<span class='btn btn-warning'><?php echo $value['status'] ?></span>
 								</td>
 								<td>
-									<a href='#' class='btn btn-success' title='Editar datos del Student' id='<?php echo $value['id'] ?>' onclick='ventanaEditarAlumno(this.id)'>
+									<a href='#' class='btn btn-success'  data-bs-toggle="modal" data-bs-target="#staticBackdrop" title='Editar datos del Estudiante' id='<?php echo $value['id'] ?>' onclick='editStudent(this.id)'>
 										<i class='ti ti-pencil'> </i>
 									</a>
 									|
-									<a href='#' class='btn btn-danger' id='<?php echo $value['status'] ?>' onclick='eliminarAlumno(this.id)' title='Elimina el registro del Student de la base da datos'>
+									<a href='#' class='btn btn-danger' id='<?php echo $value['id'] ?>' onclick='deleteStudent(this.id)' title='Elimina el registro del Estudiante de la base da datos'>
 										<i class='ti ti-trash'> </i>
 									</a>
 								</td>
@@ -62,7 +62,7 @@
 					?>
 				</tbody>
 				</table>
-				<a href='#' class='btn btn-primary' onclick='ventanaNuevoAlumno()'><i class='fa fa-plus-circle'> Agregar Alumno </i></a>
+				<a href='#' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="newStudent()"><i class='fa fa-plus-circle'> Agregar Alumno </i></a><br><br>
 			</div>
 			</div>
 		</div>
