@@ -26,6 +26,7 @@
 <!-- [Template CSS Files] -->
 <link rel="stylesheet" href="assets/css/style.css" id="main-style-link" >
 <link rel="stylesheet" href="assets/css/style-preset.css" >
+<link rel="stylesheet" href="assets/css/custom.css" >
 
 </head>
 <!-- [Head] end -->
@@ -44,7 +45,7 @@
     <div class="auth-wrapper v3">
       <div class="auth-form">
         <div class="auth-header">
-          <a href="#"><img src="assets/images/Sisvot_P1.png" alt="img"></a>
+          <a href="#"><img src="assets/images/LogoSysvot2026-2.png" alt="img" class="logoSysvot1"></a>
         </div>
         <div class="card my-5">
           <form name='formulario' method='post' action='' onsubmit='return logear()' target="_self" class="animated delay-1s faster zoomIn" id="frmLogin">

@@ -49,7 +49,7 @@
         <div class="m-header">
           <a href="../dashboard/index.html" class="b-brand text-primary">
             <!-- ========   Change your logo from here   ============ -->
-            <img src="../assets/images/logo-dark.svg" class="img-fluid logo-lg" alt="logo">
+            <img src="../assets/images/LogoSysvot2026-2.png" class="img-fluid logo-lg" alt="logo">
           </a>
         </div>
       </div>
@@ -61,7 +61,7 @@
           <ul class="list-unstyled">
             <!-- ======= Menu collapse Icon ===== -->
             <li class="pc-h-item pc-sidebar-collapse">
-                <img src="../assets/images/Sisvot_P1.png" class="img-fluid logo-lg" alt="logo">
+                <img src="../assets/images/LogoSysvot2026-2.png" class="img-fluid logo-lg logoSysvot1" alt="logo">
             </li>
             <li>
               <h5 class="m-2">INSTITUCION EDUCATIVA TECNICA AGROPECUARIA Y MINERA DE SAN MARTIN DE LOBA <br> INETAM</h5>

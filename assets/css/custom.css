@@ -40,3 +40,9 @@
     50%{border-image: -webkit-linear-gradient(left,orange,brown) 1 10;box-shadow: 0px 0px 10px rgba(200,200,200,0.5)}
     100%{border-image: -webkit-radial-gradient(lightgreen, lightblue,transparent) 20 100;box-shadow: 0px 0px 20px rgba(253,253,253,1)}
 }
+
+.logoSysvot1{
+    width: 20%;
+    clip-path: inset(20% 0% 20% 0%);
+    position: inherit;
+}

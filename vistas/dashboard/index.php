@@ -48,7 +48,7 @@
     <div class="m-header">
       <a href="../dashboard/index.php" class="b-brand text-primary">
         <!-- ========   Change your logo from here   ============ -->
-        <img src="../assets/images/Sisvot_P1.png" class="img-fluid logo-lg" alt="logo">
+        <img src="../assets/images/LogoSysvot2026-2.png" class="img-fluid logo-lg mt-4" alt="logo">
       </a>
     </div>
     <div class="navbar-content">
