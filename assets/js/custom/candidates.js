@@ -215,3 +215,76 @@ function deleteCandidate(id){
         }
     });
 }
+
+async function newCandidateStep2(candidateType){
+
+  let contenedor = document.querySelector("#bodyForm"); 
+    // o el ID real donde están los checkbox
+
+    let seleccionados = [];
+
+    contenedor.querySelectorAll(".chk-candidato:checked").forEach(chk => {
+        seleccionados.push(chk.value);
+    });
+
+    console.log(seleccionados);
+
+    if (seleccionados.length === 0) {
+        alert("Seleccione al menos un candidato");
+        return;
+    }
+    document.getElementById("footerModal").innerHTML = "";
+    document.getElementById("bodyForm").innerHTML = `<div class="d-flex justify-content-center">
+    <div class="spinner-border text-primary m-5" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>`;
+    try {    
+    const res = await axios.post(urlCandidates,{accion:"newStep2", candidateType: candidateType,candidates:seleccionados}).then(function(res){
+        if (res.data) {
+            
+            document.getElementById("modalTitle").innerHTML = "Nuevo candidato paso 2";
+            document.getElementById("bodyForm").innerHTML = res.data;
+            
+
+
+        } else {
+        alert('Error generando el formulario: ' + (res.data.error || 'Desconocido'));
+        }
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function activarPreviewImagen() {
+
+    document.querySelectorAll(".input-foto").forEach(input => {
+
+        input.addEventListener("change", function(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) return;
+
+            // Validación básica
+            if (!file.type.startsWith("image/")) {
+                alert("Seleccione una imagen válida");
+                e.target.value = "";
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+
+                const id = input.dataset.id;
+                const preview = document.getElementById("preview-" + id);
+
+                preview.src = event.target.result;
+                preview.style.display = "block";
+            };
+
+            reader.readAsDataURL(file);
+        });
+    });
+}

@@ -3,7 +3,7 @@
     El listado de posibles candidatos es tomado del grado <?php echo $gradeCandidate; ?> de la institución. 
 </div>
 <hr>
-<form id="formularioSeleccionCandidatos" method="post" target="cargaSelCandidatos" onsubmit="addCandidates()" enctype="multipart/form-data">
+<form id="formularioSeleccionCandidatos" method="post" target="cargaSelCandidatos" enctype="multipart/form-data">
     <table class='table table-striped'  id="show-hide-candidate" style="width: 100%;">            
         <thead>
             <tr>
@@ -28,15 +28,15 @@
                     if($candidato['candidatoId'] > 0){
                     ?>
                         
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" value="<?php echo $candidato['id'] ?>" id="<?php echo $candidato['id'] ?>"  name='groupCandidates[]' checked disabled>
+                    <div class="form-check">
+                        <input class="form-check-input chk-candidato" type="checkbox" value="<?php echo $candidato['id'] ?>" id="<?php echo $candidato['id'] ?>"  name='groupCandidates[]' checked disabled>
                         <label class="form-check-label" for="flexSwitchCheckChecked">Ya es candidato</label>
                     </div>
                     <?php 
                     }else{ 
                     ?>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" value="<?php echo $candidato['id'] ?>" id="<?php echo $candidato['id'] ?>"  name='groupCandidates[]' >
+                    <div class="form-check">
+                        <input class="form-check-input chk-candidato" type="checkbox" value="<?php echo $candidato['id'] ?>" id="<?php echo $candidato['id'] ?>"  name='groupCandidates[]' >
                     </div>  
                     <?php } ?>
                     
@@ -56,7 +56,7 @@
     </table>
     <div class="row mt-4">
         <div class="col-6">
-            <input type='submit' value='Listo' class='btn btn-outline btn-success btn-lg ' id='enviar' style='width:100%'>
+            <input type='button' value='Continuar' class='btn btn-outline btn-success btn-lg ' id='btnSiguiente' style='width:100%' onclick="newCandidateStep2()" >
         </div>
         <div class="col-6">
             <button type='button' class='btn btn-outline btn-secondary btn-lg' id='Candidatos' data-bs-dismiss="modal" style='width:100%'>Cancelar</button>

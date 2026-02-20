@@ -24,7 +24,18 @@
                 $candidateTypeString = "Contralor";
                 $gradeCandidate = 10;
             }
-            include("../vistas/candidatos/form.php");
+            include("../vistas/candidatos/formStep1.php");
+            break;
+        
+        case 'newStep2':
+            $objCandidato = new Candidato();	
+            $candidateTypeString = "Personero";
+            $gradeCandidate = 11;
+            if($data['candidateType']== 2){
+                $candidateTypeString = "Contralor";
+                $gradeCandidate = 10;
+            }
+            include("../vistas/candidatos/formStep2.php");
             break;
         case 'edit':
             $objCandidato = new Candidato();	

@@ -112,7 +112,19 @@
                 echo "Error: ".$e;
             }
         }
-
+         
+        function elegiblesSeleccionados($candidateType,$candidatos){
+            $placeholders = implode(',', array_fill(0, count($candidatos), '?'));
+            $this->sql = "SELECT e.*,c.`id` AS candidatoId FROM students e LEFT JOIN candidatos c ON c.`studentId` = e.`id` WHERE e.`id` IN ($placeholders)";
+            try {
+                $stm = $this->Conexion->prepare($this->sql);
+                $stm->execute($candidatos);
+                $datos = $stm->fetchall(PDO::FETCH_ASSOC);
+                return $datos;
+            } catch (Exception $e) {
+                echo "Error: ".$e;
+            }
+        }
         function seleccionar(){
 
         }
