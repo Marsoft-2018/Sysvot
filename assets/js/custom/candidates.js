@@ -223,7 +223,7 @@ async function newCandidateStep2(candidateType){
 
     let seleccionados = [];
 
-    contenedor.querySelectorAll(".chk-candidato:checked").forEach(chk => {
+    contenedor.querySelectorAll(".chk-candidato:checked:not(:disabled)").forEach(chk => {
         seleccionados.push(chk.value);
     });
 
@@ -256,35 +256,29 @@ async function newCandidateStep2(candidateType){
   }
 }
 
-function activarPreviewImagen() {
+function activarPreviewImagen(input,id) {
+  const file = input.files[0];
+  if (!file) return;
 
-    document.querySelectorAll(".input-foto").forEach(input => {
+  if (!file.type.startsWith("image/")) {
+      alert("Seleccione una imagen válida");
+      input.value = "";
+      return;
+  }
 
-        input.addEventListener("change", function(e) {
+  if (file.size > 2 * 1024 * 1024) {
+      alert("La imagen no debe superar 2MB");
+      input.value = "";
+      return;
+  }
 
-            const file = e.target.files[0];
+  const reader = new FileReader();
 
-            if (!file) return;
+  reader.onload = function(e) {
+      const preview = document.getElementById("preview-" + id);
+      preview.src = e.target.result;
+      preview.style.display = "block";
+  };
 
-            // Validación básica
-            if (!file.type.startsWith("image/")) {
-                alert("Seleccione una imagen válida");
-                e.target.value = "";
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-
-                const id = input.dataset.id;
-                const preview = document.getElementById("preview-" + id);
-
-                preview.src = event.target.result;
-                preview.style.display = "block";
-            };
-
-            reader.readAsDataURL(file);
-        });
-    });
+  reader.readAsDataURL(file);
 }

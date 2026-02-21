@@ -56,7 +56,7 @@
     </table>
     <div class="row mt-4">
         <div class="col-6">
-            <input type='button' value='Continuar' class='btn btn-outline btn-success btn-lg ' id='btnSiguiente' style='width:100%' onclick="newCandidateStep2()" >
+            <input type='button' value='Continuar' class='btn btn-outline btn-success btn-lg ' id='btnSiguiente' style='width:100%' onclick="newCandidateStep2('<?php echo $data['candidateType'] ?>')" >
         </div>
         <div class="col-6">
             <button type='button' class='btn btn-outline btn-secondary btn-lg' id='Candidatos' data-bs-dismiss="modal" style='width:100%'>Cancelar</button>
