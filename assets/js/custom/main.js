@@ -162,34 +162,6 @@ function foto(archivo){
 	alert ("La foto seleccionada es: "+archivo);	
 }
 
-
-function previsualizarFotoEst(input) {    
-    var archivo = document.getElementById("imgProfe").files;
-    var tamanho=archivo[0].size;
-    var tipo=archivo[0].type;
-    var nombre=archivo[0].name;
-    if(tamanho>1024*1024){
-        alertify.error("El archivo supera el limite del tamaño máximo permitido de 1Mb");
-        $('#fotoUs').attr('src', 'IMAGENES/Usuarios/silueta.jpg');
-        archivo.wrap('<form>').closest('formProfe').get(0).reset();
-        archivo.unwrap();
-    }else if(tipo!="image/jpg" && tipo!="image/jpeg" && tipo!="image/png" ){
-        alertify.error("Este tipo de archivo no es permitido");
-         archivo.wrap('<form>').closest('formProfe').get(0).reset();
-         archivo.unwrap();
-        $('#fotoUs').attr('src', 'IMAGENES/Usuarios/silueta.jpg');
-    }else{
-       if (input.files && input.files[0]) {
-            var reader = new FileReader();            
-            reader.onload = function (e) {
-                $('#fotoUs').attr('src', e.target.result);
-                $('#guardarIMG').fadeIn();
-            }            
-            reader.readAsDataURL(input.files[0]);
-        } 
-    }    
-}
-
 function cambiarFoto2(id){     
     var datosFormulario = new FormData(document.getElementById('cambioFoto'));
     datosFormulario.append('accion','cambiarFotoEstudiante');

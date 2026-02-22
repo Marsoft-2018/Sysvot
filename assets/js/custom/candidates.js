@@ -67,45 +67,38 @@ async function addCandidates(){
   <div class="spinner-border text-primary m-5" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>`;
-  try {    
-      id = document.getElementById("id").value;
-      firstName = document.getElementById("firstName").value;
-      secondName = document.getElementById("secondName").value;
-      firstLastName = document.getElementById("firstLastName").value;
-      secondLastName = document.getElementById("secondLastName").value;
-      grade = document.getElementById("grade").value;
-      group = document.getElementById("group").value;
-      gender = document.getElementById("gender").value;
-    const res = await axios.post(urlCandidates,
-        {accion:"add",
-          id:id,
-          firstName:firstName,
-          secondName:secondName,
-          firstLastName:firstLastName,
-          secondLastName:secondLastName,
-          grade:grade,
-          group:group,
-          gender:gender
-        }
-      ).then(function(res){
-        if (res.data) { 
-          Swal.fire({
-              title: "¡Hecho!",
-              text: "El candidato se guardó satisfactoriamente",
-              icon: "success",
-              allowOutsideClick: false, 
-              timer: 1500,
-              showConfirmButton: false
-          }).then(() => {
-            indexCandidate();
-          }); 
-        } else {
-        alert('Error generando el formulario: ' + (res.data.error || 'Desconocido'));
+  const form = document.getElementById("formularioSeleccionCandidatos");
+  const formData = new FormData(form);
+
+  formData.append("accion", "add");
+
+  try {
+    const response = await axios.post(urlCandidates, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
         }
     });
-  } catch (err) {
-    console.error(err);
-    alert('Error al generar PDF. Asegúrate de tener DOMPDF instalado y configurado.');
+    Swal.fire({
+      title: 'Imagen no válida!',
+      text: response.data.mensaje,
+      icon: 'success',
+      position: 'top-end', // Cambia la posición (top, top-end, bottom, etc.) [1]
+      toast: true, // Opcional: estilo tipo toast
+      showConfirmButton: false,
+      timer: 5000,
+      // Asegura que esté por encima del backdrop del modal
+      customClass: {
+        container: 'swal-override'
+      },
+      didOpen: (toast) => {
+        // Asegurar z-index superior al del modal de bootstrap (normalmente 1050+)
+        toast.parentElement.style.zIndex = '9999'; 
+      },
+      animation: true
+    });
+    indexCandidates();
+  } catch (error) {
+      console.error(error);
   }
 }
 
@@ -177,11 +170,10 @@ async function updateCandidate(oldId){
   }
 }
 
-
 function deleteCandidate(id){
   Swal.fire({
         title: "Eliminar candidato",
-        text: "¿Deseas continuar con la eliminación del candidato?",
+        text: "¿Deseas continuar con la eliminación del candidato?, recuerda que eliminar un candidato puede eliminar sus votos",
         icon: "error",
         showCancelButton: true,
         allowOutsideClick: false,
@@ -205,7 +197,7 @@ function deleteCandidate(id){
                     allowOutsideClick: false, 
                     icon: "success",        
                     preConfirm: () => {
-                        indexCandidate();
+                        indexCandidates();
                     }
                 });// fin de swal
             })
@@ -230,8 +222,25 @@ async function newCandidateStep2(candidateType){
     console.log(seleccionados);
 
     if (seleccionados.length === 0) {
-        alert("Seleccione al menos un candidato");
-        return;
+      Swal.fire({
+        title: 'Sin datos!',
+        text: 'Seleccione al menos un candidato',
+        icon: 'error',
+        position: 'top-end', // Cambia la posición (top, top-end, bottom, etc.) [1]
+        toast: true, // Opcional: estilo tipo toast
+        showConfirmButton: false,
+        timer: 5000,
+        // Asegura que esté por encima del backdrop del modal
+        customClass: {
+          container: 'swal-override'
+        },
+        didOpen: (toast) => {
+          // Asegurar z-index superior al del modal de bootstrap (normalmente 1050+)
+          toast.parentElement.style.zIndex = '9999'; 
+        },
+        animation: true
+      });
+      return;
     }
     document.getElementById("footerModal").innerHTML = "";
     document.getElementById("bodyForm").innerHTML = `<div class="d-flex justify-content-center">
@@ -261,15 +270,50 @@ function activarPreviewImagen(input,id) {
   if (!file) return;
 
   if (!file.type.startsWith("image/")) {
-      alert("Seleccione una imagen válida");
-      input.value = "";
-      return;
+    Swal.fire({
+      title: 'Imagen no válida!',
+      text: 'Seleccione una imagen válida',
+      icon: 'error',
+      position: 'top-end', // Cambia la posición (top, top-end, bottom, etc.) [1]
+      toast: true, // Opcional: estilo tipo toast
+      showConfirmButton: false,
+      timer: 5000,
+      // Asegura que esté por encima del backdrop del modal
+      customClass: {
+        container: 'swal-override'
+      },
+      didOpen: (toast) => {
+        // Asegurar z-index superior al del modal de bootstrap (normalmente 1050+)
+        toast.parentElement.style.zIndex = '9999'; 
+      },
+      animation: true
+    });
+    input.value = "";
+    return;
   }
 
   if (file.size > 2 * 1024 * 1024) {
-      alert("La imagen no debe superar 2MB");
-      input.value = "";
-      return;
+    Swal.fire({
+      title: 'Imagen no válida!',
+      text: 'La imagen no debe superar 2MB',
+      icon: 'error',
+      position: 'top-end', // Cambia la posición (top, top-end, bottom, etc.) [1]
+      toast: true, // Opcional: estilo tipo toast
+      showConfirmButton: false,
+      timer: 5000,
+      // Asegura que esté por encima del backdrop del modal
+      customClass: {
+        container: 'swal-override'
+      },
+      didOpen: (toast) => {
+        // Asegurar z-index superior al del modal de bootstrap (normalmente 1050+)
+        toast.parentElement.style.zIndex = '9999'; 
+      },
+      animation: true
+    });
+    
+    input.value = "";
+    return;
   }
 
   const reader = new FileReader();

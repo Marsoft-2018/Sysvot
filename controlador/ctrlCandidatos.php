@@ -41,17 +41,45 @@
             $objCandidato = new Candidato();	
             include("../vistas/candidatos/form.php");
             break;
-        case 'add':                
-            $objCandidato = new Candidato();	
-            $objCandidato->id = $data['id'];
-            $objCandidato->grade = $data['grade'];
-            $objCandidato->group = $data['group'];
-            $objCandidato->firstLastName = $data['firstLastName'];
-            $objCandidato->secondLastName = $data['secondLastName'];
-            $objCandidato->firstName = $data['firstName'];
-            $objCandidato->secondName = $data['secondName'];
-            $objCandidato->gender = $data['gender'];
-            $objCandidato->add();
+        case 'add':   
+            try {
+                foreach ($_POST['candidatos'] as $id => $datos) {
+                    $fotoNombre = null;
+                    if (isset($_FILES['candidatos']['name'][$id]['foto'])) {
+                        $tmp = $_FILES['candidatos']['tmp_name'][$id]['foto'];
+                        $extension = pathinfo(
+                            $_FILES['candidatos']['name'][$id]['foto'],
+                            PATHINFO_EXTENSION
+                        );
+
+                        $fotoNombre = uniqid().".".$extension;
+                        move_uploaded_file($tmp, "../vistas/candidatos/image/".$fotoNombre);
+                    }
+
+                    $nuevo = new Candidato(); // ⚠ aquí creas otra conexión
+
+                    $nuevo->numero     = $datos['number'];
+                    $nuevo->photo      = $fotoNombre;
+                    $nuevo->studentId  = $id;
+                    $nuevo->color      = $datos['color'];
+                    $nuevo->partido    = $datos['partido'];
+                    $nuevo->type       = $datos['candidateType'];
+
+                    if (!$nuevo->add()) {
+                        throw new Exception("Error al guardar ID ".$id);
+                    }
+                }
+                echo json_encode([
+                    "estado" => true,
+                    "mensaje" => "Candidatos guardados correctamente, ya puedes cerrar la ventana"
+                ]);
+
+            } catch (Exception $e) {
+                echo json_encode([
+                    "estado" => false,
+                    "mensaje" => $e->getMessage()
+                ]);
+            }
             break;
         case 'update':
             $objCandidato = new Candidato();

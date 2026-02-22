@@ -40,7 +40,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href='#' class='btn btn-danger' onclick ="eliminarCandidato('<?php echo $candidato['id'] ?>')" title='Elimina el registro del candidato de la base da datos'>
+                                <a href='#' class='btn btn-danger' onclick ="deleteCandidate('<?php echo $candidato['id'] ?>')" title='Elimina el registro del candidato de la base da datos'>
                                     <i class='ti ti-trash'> </i>
                                 </a>
                             </td>
@@ -103,7 +103,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href='#' class='btn btn-danger' onclick ="eliminarCandidato('<?php echo $candidato['id'] ?>')" title='Elimina el registro del candidato de la base da datos'>
+                                <a href='#' class='btn btn-danger' onclick ="deleteCandidate('<?php echo $candidato['id'] ?>')" title='Elimina el registro del candidato de la base da datos'>
                                     <i class='ti ti-trash'> </i>
                                 </a>
                             </td>

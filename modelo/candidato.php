@@ -7,23 +7,24 @@
         public $color;
         public $partido;
         public $type;
-
-        public $sql;
+        public $file;
+        
+        private $sql;
         function add(){
-            $this->sql = "INSERT INTO candidatos(numero, photo, studentId, color, partido, `type`)  VALUES (?,?,?,?,?,?)";
+            $this->sql = "INSERT INTO candidatos(numero, photo, studentId, color, partido, `type`) VALUES (?,?,?,?,?,?)";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
-                $stm->bindparam(1,$this->numero);
-                $stm->bindparam(2,$this->photo);
-                $stm->bindparam(3,$this->studentId);
-                $stm->bindparam(4,$this->color);
-                $stm->bindparam(5,$this->partido);
-                $stm->bindparam(6,$this->type);
-                if ($stm->execute()) {
-                   echo "Registro agregado con éxito";
-                }
+
+                $stm->bindParam(1, $this->numero);
+                $stm->bindParam(2, $this->photo);
+                $stm->bindParam(3, $this->studentId);
+                $stm->bindParam(4, $this->color);
+                $stm->bindParam(5, $this->partido);
+                $stm->bindParam(6, $this->type);
+
+                return $stm->execute();
             } catch (Exception $e) {
-                echo "Error: ".$e;
+                return false;
             }
         }
         
@@ -125,8 +126,17 @@
                 echo "Error: ".$e;
             }
         }
-        function seleccionar(){
 
+        function addLIstCandidates(){
+            $this->sql = "";
+            try {
+                $stm = $this->Conexion->prepare($this->sql);
+                $stm->execute($candidatos);
+                $datos = $stm->fetchall(PDO::FETCH_ASSOC);
+                return $datos;
+            } catch (Exception $e) {
+                echo "Error: ".$e;
+            }
         }
         
     }

@@ -29,6 +29,8 @@
 <!-- data tables css -->
     <link rel="stylesheet" href="../assets/css/plugins/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../assets/css/plugins/responsive.bootstrap5.min.css">
+<!-- custom css -->
+    <link rel="stylesheet" href="../assets/css/custom.css" >
     <!-- [Page specific CSS] end -->
 </head>
 <!-- [Head] end -->
