@@ -79,9 +79,8 @@ async function addCandidates(){
         }
     });
     Swal.fire({
-      title: 'Imagen no válida!',
       text: response.data.mensaje,
-      icon: 'success',
+      icon: response.data.icono,
       position: 'top-end', // Cambia la posición (top, top-end, bottom, etc.) [1]
       toast: true, // Opcional: estilo tipo toast
       showConfirmButton: false,
@@ -97,6 +96,7 @@ async function addCandidates(){
       animation: true
     });
     indexCandidates();
+    document.getElementById("footerModal").innerHTML ="";
   } catch (error) {
       console.error(error);
   }

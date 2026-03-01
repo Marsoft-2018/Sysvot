@@ -67,7 +67,7 @@
           <i class="ti ti-dashboard"></i>
         </li>
         <li class="pc-item">
-          <a href="#" onclick='administrar(this.id)' id='Usuarios' class="pc-link">
+          <a href="#" onclick='indexUsers()' class="pc-link">
             <span class="pc-micon"><i class="ti ti-users"></i></span>
             <span class="pc-mtext">Usuarios</span>
           </a>
@@ -672,6 +672,7 @@
 	<script type='text/javascript' src='../assets/js/custom/main.js'></script>
 	<script type='text/javascript' src='../assets/js/custom/students.js'></script>
 	<script type='text/javascript' src='../assets/js/custom/candidates.js'></script>
+	<script type='text/javascript' src='../assets/js/custom/users.js'></script>
 
 </body>
 <!-- [Body] end -->

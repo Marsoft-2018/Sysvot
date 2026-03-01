@@ -1,15 +1,17 @@
 <?php
 	class User extends Conexion{
+		public $oldId;
 		public $id;
 		public $name;
 		public $password;
+		public $role;
+		public $status;
+  		public $institucionId;//Hasta aqui son los campos de la tabla
 		public $fullName;
 		public $email;
 		public $address;
 		public $phone;
 		public $cargo;
-		public $role;
-		public $status;
 		
 		private $sql;
 
@@ -63,7 +65,7 @@
 			}
 		}
 
-		public function listar(){
+		public function list(){
 			$this->sql ="SELECT * FROM users ORDER BY id";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
@@ -75,49 +77,54 @@
 				echo "error al guardar los datos: ".$e;
 			}
 		}
+		
+		public function load(){
+			$this->sql ="SELECT * FROM users WHERE id=?";
+			try {
+				$stm = $this->Conexion->prepare($this->sql);
+				$stm->bindParam(1,$this->id);
+				$stm->execute();				
+				$datos = $stm->fetchAll(PDO::FETCH_ASSOC);
+				return $datos;
+			} catch (Exception $e) {
+				echo "error al guardar los datos: ".$e;
+			}
+		}
 
-		public function agregar(){
-			$this->sql ="INSERT INTO t_users(name, password, role, fullName, email, address, phone, cargo) VALUES(?,?,?,?,?,?,?,?)";
+		public function add(){
+			$this->sql ="INSERT INTO users(id, password, name, role, status, institucionId) VALUES(?,?,?,?,?,?)";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1,$this->id);
 				$stm->bindParam(2,$this->password);
-				$stm->bindParam(3,$this->role);
-				$stm->bindParam(4,$this->fullName);
-				$stm->bindParam(5,$this->email);
-				$stm->bindParam(6,$this->address);
-				$stm->bindParam(7,$this->phone);
-				$stm->bindParam(8,$this->cargo);
-				$stm->execute();
+				$stm->bindParam(3,$this->name);
+				$stm->bindParam(4,$this->role);
+				$stm->bindParam(5,$this->status);
+				$stm->bindParam(6,$this->institucionId);
+                return $stm->execute();
 			} catch (Exception $e) {
-				echo "error al guardar los datos: ".$e;
+                return false;
 			}
 		}
 
-		public function actualizar(){
-			if ($this->role == "Profesor") {
-				$this->sql ="UPDATE profesores SET name=?, email=?, address=?, phone=? WHERE id = '".$this->id."' AND status = 1";
-			}elseif($this->role == "Administrador"){
-				$this->sql ="UPDATE t_users SET name=?, role=?, fullName=?, email=?, address=?, phone=?, cargo=? WHERE id_name = '".$this->id."' AND status = 1";		
-			}
-
+		public function update(){
+			$this->sql ="UPDATE `users` SET id=?, `role`=?, `name`=?, `status`=?, `password`=? WHERE `id` = ?";
+			
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1,$this->id);
 				$stm->bindParam(2,$this->role);
-				$stm->bindParam(3,$this->fullName);
-				$stm->bindParam(4,$this->email);
-				$stm->bindParam(5,$this->address);
-				$stm->bindParam(6,$this->phone);
-				$stm->bindParam(7,$this->cargo);
-				$stm->execute();
-				echo "Se guardaron los datos con éxito, debe reiniciar la sesión para que tengan efecto";
+				$stm->bindParam(3,$this->name);
+				$stm->bindParam(4,$this->status);
+				$stm->bindParam(5,$this->password);
+				$stm->bindParam(6,$this->oldId);
+				return $stm->execute();
 			} catch (Exception $e) {
-				echo "error al guardar los datos: ".$e;
+				return false;
 			}
 		}
 
-		public function desactivar(){
+		public function disabled(){
 			$this->sql ="UPDATE t_users SET status = 2 WHERE id_name = '".$this->id."' ";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
@@ -127,14 +134,14 @@
 			}
 		}
 
-		public function eliminar(){
-			$this->sql ="DELETE FROM t_users WHERE id= ?";
+		public function delete(){
+			$this->sql ="DELETE FROM users WHERE id= ?";
 			try {
 				$stm = $this->Conexion->prepare($this->sql);
 				$stm->bindParam(1,$this->id);
-				$stm->execute();
+				return $stm->execute();
 			} catch (Exception $e) {
-				echo "error al guardar los datos: ".$e;
+				return false;
 			}
 		}
 

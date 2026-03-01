@@ -56,8 +56,7 @@
                         move_uploaded_file($tmp, "../vistas/candidatos/image/".$fotoNombre);
                     }
 
-                    $nuevo = new Candidato(); // ⚠ aquí creas otra conexión
-
+                    $nuevo = new Candidato(); 
                     $nuevo->numero     = $datos['number'];
                     $nuevo->photo      = $fotoNombre;
                     $nuevo->studentId  = $id;
@@ -71,13 +70,15 @@
                 }
                 echo json_encode([
                     "estado" => true,
-                    "mensaje" => "Candidatos guardados correctamente, ya puedes cerrar la ventana"
+                    "mensaje" => "Candidatos guardados correctamente", 
+                    "icono" => "success"
                 ]);
 
             } catch (Exception $e) {
                 echo json_encode([
                     "estado" => false,
-                    "mensaje" => $e->getMessage()
+                    "mensaje" => $e->getMessage(), 
+                    "icono" => "error"
                 ]);
             }
             break;

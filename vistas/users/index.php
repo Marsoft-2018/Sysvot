@@ -1,10 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <button type="button" onclick="nuevo_User()" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button>
-        </div>
-        <div class="col-md-6">
-            <button type="button" onclick="listar_usuarios()" class="btn btn-info"><i class="fa fa-plus"></i> Listar</button>
+            <a href='#' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="newUser()"><i class='fa fa-plus-circle'> Agregar usuario </i></a><br><br>
         </div>
     </div>
 </div>
