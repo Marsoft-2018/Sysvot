@@ -403,8 +403,7 @@
               $totalVotosContralor = $value['Votos'];
             }
           }
-        if( $totalVotosPersonero > 0){
-          ?>
+      ?>
       <!-- [ Main Content ] start -->
        <div class="row">
         <div class="col">
@@ -416,7 +415,7 @@
       <div class="row">
         <?php
           $total_filas = ceil($objCandidato->contar()/2);
-          foreach ($objCandidato->listarPersoneros() as $candidato) {                 
+          foreach ($objTotalVotos->contarTipo('Personero',2026) as $candidato) {                 
               ?> 
             <!-- [ sample-page ] start -->
             <div class="col-md-6 col-xl-3">
@@ -449,15 +448,12 @@
                   <h4 class="mb-3">
                     Total votos:
                     <?php 
-                      $objVotos = new Voto();
-                      $objVotos->id = $candidato['id'];
-                      $contVotos = 0;
-                      foreach($objVotos->contar() as $votos){
-                          $contVotos = $votos['Votos']; 
-                      }
-                      echo $contVotos; 
+                      echo $candidato['Votos']; 
                       $objTotalVotos = new Voto();
-                      $porcentaje = round((100 * $contVotos) / $totalVotosPersonero,2);
+                      $porcentaje = 0;
+                      if($candidato['Votos'] > 0) {
+                        $porcentaje = round((100 * $candidato['Votos']) / $totalVotosPersonero,2);
+                      }
                       $color = $clase[3];
                       if($porcentaje >10 && $porcentaje <= 20){
                         $color = $clase[2];
@@ -482,8 +478,7 @@
        <h3>CONTRALORÍA ESTUDIANTIL</h3>
       <div class="row">
         <?php
-          $objCandidato = new Candidato();
-          foreach ($objCandidato->listarContralores() as $candidato) {                 
+          foreach ($objTotalVotos->contarTipo('Contralor',2026) as $candidato) {                 
               ?> 
             <!-- [ sample-page ] start -->
             <div class="col-md-6 col-xl-3">
@@ -516,15 +511,12 @@
                   <h4 class="mb-3">
                     Total votos:
                     <?php 
-                      $objVotos = new Voto();
-                      $objVotos->id = $candidato['id'];
-                      $contVotos = 0;
-                      foreach($objVotos->contar() as $votos){
-                          $contVotos = $votos['Votos']; 
-                      }
-                      echo $contVotos; 
+                      echo $candidato['Votos']; 
                       $objTotalVotos = new Voto();
-                      $porcentaje = round((100 * $contVotos) / $totalVotosContralor,2);
+                      $porcentaje = 0;
+                      if($candidato['Votos'] > 0) {
+                        $porcentaje = round((100 * $candidato['Votos']) / $totalVotosPersonero,2);
+                      }
                       $color = $clase[3];
                       if($porcentaje >10 && $porcentaje <= 20){
                         $color = $clase[2];
@@ -608,11 +600,7 @@
             </div>
           </div>
         </div>
-      </div>
-      
-      <?php
-        }
-        ?>
+      </div>      
     </div>
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

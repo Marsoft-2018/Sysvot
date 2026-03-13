@@ -31,7 +31,7 @@
         }
 
         function contar(){
-            $this->sql = "SELECT vt.Numero AS id, COUNT(vt.Numero) AS 'Votos' FROM registrovotos vt WHERE vt.Numero = ? AND Anio = '2025' GROUP BY vt.`Numero` ORDER BY 'Votos' DESC";
+            $this->sql = "SELECT vt.Numero AS id, COUNT(vt.Numero) AS 'Votos' FROM registrovotos vt WHERE vt.Numero = ? AND Anio = '2026' GROUP BY vt.`Numero` ORDER BY 'Votos' DESC";
             try {
                 $stm = $this->Conexion->prepare($this->sql);
                 $stm->bindparam(1,$this->id);
@@ -43,8 +43,24 @@
             }
         }
         
+        function contarTipo($type,$year){
+            if(!isset($year)){ $year = date("Y"); }
+
+            $this->sql = "SELECT ca.id, ca.numero, al.firstName, al.secondName, al.firstLastName, al.secondLastName, ca.photo, ca.color, COUNT(vt.Numero) AS Votos FROM candidatos ca INNER JOIN students al ON al.id = ca.studentId LEFT JOIN registrovotos vt ON ca.numero = vt.Numero AND vt.Anio = ? WHERE ca.type = ? GROUP BY ca.Id, ca.numero, al.firstName, al.secondName, al.firstLastName, al.secondLastName, ca.photo ORDER BY Votos DESC";
+            try {
+                $stm = $this->Conexion->prepare($this->sql);
+                $stm->bindparam(1,$year);
+                $stm->bindparam(2,$type);
+                $stm->execute();
+                $datos = $stm->fetchall(PDO::FETCH_ASSOC);
+                return $datos;
+            } catch (Exception $e) {
+                echo "Error: ".$e;
+            }
+        }
+        
         function totalVotos(){
-            $this->sql = "SELECT vt.type, COUNT(vt.Numero) AS 'Votos' FROM registrovotos vt WHERE Anio = '2025' GROUP BY vt.`type` ORDER BY 'Votos' DESC";
+            $this->sql = "SELECT vt.type, COUNT(vt.Numero) AS 'Votos' FROM registrovotos vt WHERE Anio = '2026' GROUP BY vt.`type` ORDER BY 'Votos' DESC";
             try {
                 $totalVotos = 0;
                 $stm = $this->Conexion->prepare($this->sql);
